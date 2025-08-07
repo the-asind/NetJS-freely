@@ -22,6 +22,15 @@ public interface NetJSWrapper {
         }
 
         static void request(String url, String method, String body, boolean is_async, NetJSICallback c) {
+                if (url == null || url.isEmpty()) {
+                        throw new IllegalArgumentException("URL cannot be null or empty");
+                }
+                if (method != null && method.isEmpty()) {
+                        throw new IllegalArgumentException("Method cannot be empty");
+                }
+                if (c == null) {
+                        throw new IllegalArgumentException("Callback cannot be null");
+                }
                 HttpRequestTask task = new HttpRequestTask(url, method, body, c);
                 getResult(task, is_async);
         }
